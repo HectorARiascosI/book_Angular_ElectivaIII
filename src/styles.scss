@@ -1,11 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+/* You can add global styles to this file, and also import other style files */
+/* =========================
+   VARIABLES GENERALES
+========================== */
+:root {
+  --background: #f5f7fb;
+  --surface: #ffffff;
+  --text: #202431;
+  --muted: #747b8b;
+  --border: #e4e7ee;
 
-* {
-    box-sizing: border-box;
+  --primary: #4f46e5;
+  --primary-dark: #3f37c9;
+  --primary-soft: #eef0ff;
+
+  --danger: #dc3545;
+  --danger-soft: #fff0f1;
+
+  --high: #c0392b;
+  --high-bg: #fdecea;
+
+  --medium: #9a6700;
+  --medium-bg: #fff4d6;
+
+  --low: #237a45;
+  --low-bg: #e6f7ec;
+
+  --radius: 14px;
+  --shadow: 0 8px 30px rgba(32, 36, 49, 0.07);
 }
 
-html,
+
+
+/* =========================
+   RESET BÁSICO
+========================== */
+* {
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    font-family: 'DM Sans', sans-serif;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
 }

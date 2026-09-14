@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -11,9 +11,9 @@ export class App {
   name = "Ivonne Carolina";
 
   person = {
-    name: "Ivonne Carolina",
-    age: 25,
-    email: "ivonne@correo.com",
+    name: "Hector Riascos",
+    age: 21,
+    email: "hector@correo.com",
     profileImg: "https://placehold.co/80x100"
   }
 

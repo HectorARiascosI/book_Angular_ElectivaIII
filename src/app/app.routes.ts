@@ -5,8 +5,7 @@ import { Labs } from './labs/labs';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'inicio',
-    pathMatch: 'full',
+    component: Home,
   },
   {
     path: 'inicio',

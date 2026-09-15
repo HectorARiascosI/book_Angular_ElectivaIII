@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
 })
 export class App {
-  name = "Ivonne Carolina";
+  name = "Hector Riascos";
 
   person = {
     name: "Hector Riascos",

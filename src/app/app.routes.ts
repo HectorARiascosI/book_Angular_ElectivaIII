@@ -1,14 +1,23 @@
 import { Routes } from '@angular/router';
+import { Home } from './home/home';
+import { Labs } from './labs/labs';
+import { Taskflow } from './taskflow/taskflow';
 
 export const routes: Routes = [
-	{
-		path: 'todo',
-		loadComponent: () => import('./todo-list/todo-list').then((component) => component.TodoList),
-	},
-	{
-		path: 'labs',
-		loadComponent: () => import('./labs/labs').then((component) => component.Labs),
-	},
-	{ path: '', redirectTo: 'todo', pathMatch: 'full' },
-	{ path: '**', redirectTo: 'todo' },
+  {
+    path: '',
+    component: Taskflow
+  },
+  {
+    path: 'labs',
+    component: Labs
+  },
+  {
+    path: 'inicio',
+    component: Home
+  },
+  {
+    path: 'labs',
+    component: Labs
+  }
 ];

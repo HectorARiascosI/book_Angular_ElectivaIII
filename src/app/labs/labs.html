@@ -1,69 +1,57 @@
-<main class="labs-page">
-  <section class="labs-hero" aria-labelledby="labs-title">
-    <p class="eyebrow">Laboratorio de Angular</p>
-    <h1 id="labs-title">Signals y estructuras de control</h1>
-    <p class="intro">Ejercicios prácticos de interpolación, formularios y listas reactivas.</p>
-  </section>
+<h1>Frameworks de Frontend con TypeScript</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
+  aliqua.</p>
 
-  <section class="labs-grid">
-    <article class="lab-card interpolation-card">
-      <p class="card-label">String Interpolation</p>
-      <h2>Hola, {{ name }}</h2>
-      <p>Tu nombre repetido: {{ name.repeat(2) }}</p>
-      <label [for]="inputText.name">{{ inputText.name }}</label>
-      <input
-        [id]="inputText.name"
-        [name]="inputText.name"
-        [type]="inputText.type"
-        [placeholder]="inputText.placeholder"
-        [(ngModel)]="edad"
-      />
-      @if (edad) {
-        <p class="result">Edad ingresada: <strong>{{ edad }}</strong></p>
-      }
-    </article>
+<hr>
 
-    <article class="lab-card signal-card">
-      <p class="card-label">Signal</p>
-      <div class="signal-preview" [class.signal-verde]="color() === 'verde'">
-        <span class="signal-dot"></span>
-        <strong>Color actual: {{ color() }}</strong>
+<h2> String Interpolation</h2>
+<h4>Hola {{ name }}</h4>
+
+<p> 5 + 5 = {{5 + 5}} </p>
+
+<p>{{ name.repeat(3)}}</p>
+<p>{{ person.name }}</p>
+<p>{{ person.age }}</p>
+<p>{{ person.email }}</p>
+<br>
+<img src="{{ person.profileImg }}" alt="" />
+
+<hr>
+
+<h1>Property Binding</h1>
+
+<input [type]="inputText.type" [max]="inputText.length" [name]="inputText.name" [placeholder]="inputText.placeholder"
+  (change)="recibirEdad($event)" (input)="recibirEdadConInput($event)" />
+
+<hr>
+<h1>Event Binding</h1>
+
+<button (click)="saludo()"> Saludo </button>
+
+<br>
+<input type="text" [value]="person.name" (keydown.shift.t)="eventoTeclado()">
+
+
+
+<h2>Signals</h2>
+<p>Color: {{ color() }}</p>
+
+<input type="text" [value]="color()" (change)="recibirColor($event)">
+<br>
+<p>Name como String Interpolation: {{name}}</p>
+
+<h2> Estructuras de control </h2>
+<div class="user-container">
+  <!-- Card 1 -->
+  <div class="user-card" *ngFor="let usuario of usuarios(); index as i">
+    <div class="avatar">⚙️</div>
+    <div class="user-info">
+      <h3> No.{{ i + 1 }} - {{ usuario.nombre }}</h3>
+      <p class="email">{{ usuario.email }}</p>
+      <div class="tags">
+        <span class="badge role">{{ usuario.rol }}</span>
+        <span class="badge status active"> {{ usuario.activo ? 'Activo' : 'Inactivo' }}</span>
       </div>
-      <button type="button" (click)="cambiarColor()">Cambiar color</button>
-    </article>
-  </section>
-
-  <section class="users-section" aria-labelledby="users-title">
-    <div class="section-heading">
-      <div>
-        <p class="card-label">Estructuras de control</p>
-        <h2 id="users-title">Directorio de usuarios</h2>
-      </div>
-      <span>{{ usuariosActivos() }} activos / {{ usuarios().length }} perfiles</span>
     </div>
-
-    <div class="user-grid">
-      @for (usuario of usuarios(); track usuario.id; let i = $index) {
-        <article class="user-card">
-          <div class="avatar">{{ usuario.nombre.charAt(0) }}</div>
-          <div class="user-info">
-            <span class="user-number">No. {{ i + 1 }}</span>
-            <h3>{{ usuario.nombre }}</h3>
-            <p>{{ usuario.email }}</p>
-            <div class="tags">
-              <span class="badge role">{{ usuario.rol }}</span>
-              <button
-                type="button"
-                class="badge status"
-                [class.active]="usuario.activo"
-                (click)="cambiarEstado(usuario)"
-              >{{ usuario.activo ? 'Activo' : 'Inactivo' }}</button>
-            </div>
-          </div>
-        </article>
-      } @empty {
-        <p>No hay usuarios registrados.</p>
-      }
-    </div>
-  </section>
-</main>
+  </div>
+</div>

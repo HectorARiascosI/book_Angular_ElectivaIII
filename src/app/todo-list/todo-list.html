@@ -1,0 +1,93 @@
+<main class="todo-page">
+  <section class="todo-card" aria-labelledby="todo-title">
+    <header class="todo-header">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-dot"></span>{{ interaction().title }}</p>
+        <h1 id="todo-title">Lista de tareas</h1>
+        <p class="subtitle">{{ interaction().message }}</p>
+      </div>
+      <div class="header-stat">
+        <strong>{{ completedTasks() }}/{{ tags().length }}</strong>
+        <span>completadas</span>
+      </div>
+    </header>
+
+    <form class="task-form" (ngSubmit)="addTask()">
+      <label class="sr-only" for="new-task">Nueva tarea</label>
+      <input id="new-task" name="newTask" [ngModel]="newTask()" (ngModelChange)="newTask.set($event)" placeholder="Escribe una nueva tarea" autocomplete="off" />
+      <label class="sr-only" for="new-task-description">Descripción</label>
+      <input id="new-task-description" name="newTaskDescription" [ngModel]="newTaskDescription()" (ngModelChange)="newTaskDescription.set($event)" placeholder="Descripción breve" autocomplete="off" />
+      <label class="sr-only" for="task-date">Fecha</label>
+      <input id="task-date" name="taskDate" type="date" [ngModel]="newTaskDate()" (ngModelChange)="newTaskDate.set($event)" />
+      <label class="sr-only" for="task-time">Hora</label>
+      <input id="task-time" name="taskTime" type="time" [ngModel]="newTaskTime()" (ngModelChange)="newTaskTime.set($event)" />
+      <label class="sr-only" for="task-priority">Prioridad</label>
+      <select id="task-priority" name="taskPriority" [ngModel]="newTaskPriority()" (ngModelChange)="newTaskPriority.set($event)">
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <label class="alarm-option">
+        <input type="checkbox" name="taskAlarm" [ngModel]="newTaskAlarm()" (ngModelChange)="newTaskAlarm.set($event)" />
+        <i data-lucide="bell" aria-hidden="true"></i>
+        Alarma
+      </label>
+      <button type="submit"><i data-lucide="plus" aria-hidden="true"></i>Agregar</button>
+    </form>
+
+    <div class="task-list" aria-live="polite">
+      @for (taskItem of tags(); track taskItem.id) {
+        <article class="task-item" [class.is-complete]="taskItem.completed">
+          <button
+            class="check-button"
+            type="button"
+            [attr.aria-label]="taskItem.completed ? 'Marcar como pendiente' : 'Marcar como completada'"
+            [attr.aria-pressed]="taskItem.completed"
+            (click)="toggleTask(taskItem)"
+          >
+            @if (taskItem.completed) {
+              <i data-lucide="check" aria-hidden="true"></i>
+            }
+          </button>
+          <div class="task-content">
+            <p>{{ taskItem.title }}</p>
+            @if (taskItem.description) {
+              <small>{{ taskItem.description }}</small>
+            }
+            <div class="task-details">
+              <span><i data-lucide="calendar-days" aria-hidden="true"></i>{{ taskItem.dateline | date:'dd/MM/yyyy' }}</span>
+              <span><i data-lucide="clock-3" aria-hidden="true"></i>{{ taskItem.dueTime }}</span>
+              <span class="priority" [class]="'priority-' + taskItem.priority.toLowerCase()">{{ taskItem.priority }}</span>
+              @if (taskItem.alarmEnabled) {
+                <span class="alarm-badge"><i data-lucide="bell" aria-hidden="true"></i>Alarma activa</span>
+              }
+            </div>
+          </div>
+          <div class="task-actions">
+            <button
+              type="button"
+              class="alarm-button"
+              [class.alarm-on]="taskItem.alarmEnabled"
+              [attr.aria-label]="taskItem.alarmEnabled ? 'Desactivar alarma' : 'Activar alarma'"
+              (click)="toggleAlarm(taskItem)"
+            ><i data-lucide="bell" aria-hidden="true"></i></button>
+            <button type="button" (click)="editTask(taskItem)"><i data-lucide="pencil" aria-hidden="true"></i><span class="action-label">Editar</span></button>
+            <button type="button" class="delete-button" (click)="removeTask(taskItem.id)"><i data-lucide="trash-2" aria-hidden="true"></i><span class="action-label">Eliminar</span></button>
+          </div>
+        </article>
+      } @empty {
+        <p class="empty-state">No tienes tareas pendientes. Agrega una para comenzar.</p>
+      }
+    </div>
+
+    <footer class="todo-footer">
+      <div class="progress-track" aria-label="Progreso de tareas">
+        <span [style.width.%]="tags().length ? (completedTasks() / tags().length) * 100 : 0"></span>
+      </div>
+      <div class="footer-counts">
+        <span><strong>{{ pendingTasks() }}</strong> pendientes</span>
+        <span><strong>{{ completedTasks() }}</strong> completadas</span>
+      </div>
+    </footer>
+  </section>
+</main>

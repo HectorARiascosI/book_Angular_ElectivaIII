@@ -1,0 +1,220 @@
+<header class="app-header">
+  <div class="container header-content">
+    <div>
+      <h1>TodoTask</h1>
+      <p>Organiza tus tareas de forma sencilla.</p>
+    </div>
+
+    <span class="user-badge">IB</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- =========================
+         RESUMEN DE TAREAS
+    ========================== -->
+  <section class="summary">
+    <article class="summary-card">
+      <span class="summary-number">{{ tasks().length }}</span>
+      <span class="summary-label">Total</span>
+    </article>
+
+    <article class="summary-card">
+      <span class="summary-number">3</span>
+      <span class="summary-label">Pendientes</span>
+    </article>
+
+    <article class="summary-card">
+      <span class="summary-number">1</span>
+      <span class="summary-label">Completadas</span>
+    </article>
+  </section>
+
+
+  <!-- =========================
+         FORMULARIO
+    ========================== -->
+  <section class="panel">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Nueva tarea</span>
+        <h2>¿Qué necesitas hacer?</h2>
+      </div>
+    </div>
+
+    <!--
+        Por ahora este formulario es estático.
+        Más adelante Angular / React controlarán sus valores y eventos.
+      -->
+    <form class="task-form">
+      <div class="form-group form-group-main">
+        <label for="taskTitle">Título</label>
+        <input id="taskTitle" name="taskTitle" type="text" (change)="onChangeTask($event)"
+          placeholder="Ej. Preparar presentación">
+      </div>
+
+      <div class="form-group">
+        <label for="priority">Prioridad</label>
+        <select id="priority" name="priority">
+          <option value="low">Baja</option>
+          <option value="medium" selected>Media</option>
+          <option value="high">Alta</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" type="button">
+        + Agregar tarea
+      </button>
+    </form>
+  </section>
+
+
+  <!-- =========================
+         FILTROS
+    ========================== -->
+  <section class="tasks-section">
+    <div class="tasks-header">
+      <div>
+        <span class="eyebrow">Mis tareas</span>
+        <h2>Listado</h2>
+      </div>
+
+      <div class="filters" aria-label="Filtros de tareas">
+        <button class="filter active" type="button">Todas</button>
+        <button class="filter" type="button">Pendientes</button>
+        <button class="filter" type="button">Completadas</button>
+      </div>
+    </div>
+
+
+    <!-- =========================
+           LISTADO DE TAREAS
+      ========================== -->
+    <div class="task-list">
+
+      <article class="task-card" *ngFor="let task of tasks(); index as position" id="task-{{position}}">
+        <div class="task-check">
+          <input type="checkbox" id="task-{{position}}">
+        </div>
+
+        <div class="task-content">
+          <div class="task-top">
+            <label for="task-{{position}}" class="task-title">
+              {{ task.title }}
+            </label>
+            <span
+              class="priority"
+              [ngClass]="setClassPriority(task?.priority)">
+                {{task.priority === 'low' ? 'Baja' :
+              task.priority === 'medium' ? 'Media' : 'Alta'}}
+            </span>
+          </div>
+
+          <p class="task-description">
+            {{ task.description}}
+          </p>
+
+          <span class="task-date">Entrega: 24 de septiembre</span>
+        </div>
+
+        <div class="task-actions">
+          <button class="icon-btn" type="button" aria-label="Editar tarea">
+            Editar
+          </button>
+          <button class="icon-btn danger" type="button" aria-label="Eliminar tarea">
+            Eliminar
+          </button>
+        </div>
+      </article>
+      <!--
+
+      <article class="task-card">
+        <div class="task-check">
+          <input type="checkbox" id="task-2">
+        </div>
+
+        <div class="task-content">
+          <div class="task-top">
+            <label for="task-2" class="task-title">
+              Revisar proyecto final
+            </label>
+            <span class="priority priority-medium">Media</span>
+          </div>
+
+          <p class="task-description">
+            Verificar avances y observaciones pendientes.
+          </p>
+
+          <span class="task-date">Entrega: 26 de septiembre</span>
+        </div>
+
+        <div class="task-actions">
+          <button class="icon-btn" type="button">Editar</button>
+          <button class="icon-btn danger" type="button">Eliminar</button>
+        </div>
+      </article>
+
+
+      <article class="task-card">
+        <div class="task-check">
+          <input type="checkbox" id="task-3">
+        </div>
+
+        <div class="task-content">
+          <div class="task-top">
+            <label for="task-3" class="task-title">
+              Actualizar documentación
+            </label>
+            <span class="priority priority-low">Baja</span>
+          </div>
+
+          <p class="task-description">
+            Agregar instrucciones de instalación y ejecución del proyecto.
+          </p>
+
+          <span class="task-date">Entrega: 30 de septiembre</span>
+        </div>
+
+        <div class="task-actions">
+          <button class="icon-btn" type="button">Editar</button>
+          <button class="icon-btn danger" type="button">Eliminar</button>
+        </div>
+      </article>
+
+      <article class="task-card completed">
+        <div class="task-check">
+          <input type="checkbox" id="task-4" checked>
+        </div>
+
+        <div class="task-content">
+          <div class="task-top">
+            <label for="task-4" class="task-title">
+              Crear repositorio de TodoTask
+            </label>
+            <span class="priority priority-medium">Media</span>
+          </div>
+
+          <p class="task-description">
+            Crear la estructura inicial del proyecto.
+          </p>
+
+          <span class="task-date">Completada</span>
+        </div>
+
+        <div class="task-actions">
+          <button class="icon-btn" type="button">Editar</button>
+          <button class="icon-btn danger" type="button">Eliminar</button>
+        </div>
+      </article> -->
+
+    </div>
+  </section>
+
+</main>
+
+<div class="app-footer">
+  <div class="container">
+    <p>TodoTask · Aplicación Frameworks Frontend UCC 2026</p>
+  </div>
+</div>

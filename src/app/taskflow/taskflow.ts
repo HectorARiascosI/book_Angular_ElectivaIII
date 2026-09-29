@@ -36,6 +36,16 @@ export class Taskflow {
     // },
   ]);
 
+  public taskTemp: Task = {
+    id: Date.now(),
+    title: '',
+    description: '',
+    priority: 'low',
+    completed: false,
+    dateLine: '',
+  };
+  isEmpty = signal(this.tasks().length === 0);
+
   public classPriority = {
     low: 'priority-low',
     medium: 'priority-medium',
@@ -47,10 +57,10 @@ export class Taskflow {
     localStorage.setItem('tasks', JSON.stringify(this.tasks()));
   }
 
-  onChangeTask(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const newTask = input.value;
-    this.addTask(newTask);
+  onChangeTask() {
+
+    console.log('.:: tastk Temp', this.taskTemp);
+    this.addTask(this.taskTemp);
   }
 
   setClassPriority(priority: any) {
@@ -66,22 +76,34 @@ export class Taskflow {
     }
   }
 
-  addTask(newTask: string) {
+  addTask(newTask: Task) {
     console.log('Nueva tarea agregada:', newTask);
 
     this.tasks.update((currentTasks) => [
       ...currentTasks,
       {
         id: Date.now(),
-        title: newTask,
-        description: '',
-        priority: 'low',
-        completed: false,
-        dateLine: '',
+        title: newTask.title,
+        description: newTask.description,
+        priority: newTask.priority,
+        completed: newTask.completed,
+        dateLine: newTask.dateLine,
       },
     ]);
 
     // Guardar el array de tareas actualizado en localStorage
     localStorage.setItem('tasks', JSON.stringify(this.tasks()));
+  }
+
+  recibirPrioridad(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    const selectedPriority = select.value;
+    this.taskTemp.priority = selectedPriority as 'low' | 'medium' | 'high';
+  }
+
+  onChangeTitleTask(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const newTitle = input.value;
+    this.taskTemp.title = newTitle;
   }
 }

@@ -54,4 +54,20 @@
       </div>
     </div>
   </div>
+
+  <hr>
+  <h1> Estructura condicional ngIf()</h1>
+
+  <button (click)="mostrarMasInformacion()">Más información</button>
+
+  <h5> Propiedad hidden: renderiza pero no se muestra</h5>
+  <p [hidden]="info">test</p>
+  <p [hidden]="true">test 2</p>
+
+  <h5> ngIf no renderiza un nodo html</h5>
+  <p *ngIf="info"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Id eos iusto corporis dolorem veritatis
+    commodi
+    consequuntur error quis, adipisci provident eveniet aspernatur aliquam beatae. Dolorum provident quibusdam iste
+    maxime corporis!</p>
+
 </div>
